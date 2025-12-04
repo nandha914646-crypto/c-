@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+
+namespace EnergyTech
+{
+    class Consumer
+    {
+        public string ConsumerID 3
+            5{ get; set; }
+        public int Units { get; set; }
+        public int TypeCode { get; set; } // 1 Domestic, 2 Commercial
+        public string ConnectionType
+        {
+            get
+            {
+                return TypeCode == 1 ? "Domestic" : "Commercial";
+            }
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Enter number of consumers: ");
+            int N = int.Parse(Console.ReadLine());
+            decimal totalRevenue = 0;
+            decimal highestBill = 0;
+            string highestBillConsumer = "";
+            int domesticCount = 0, commercialCount = 0;
+            for (int i = 0; i < N; i++)
+            {
+                Console.WriteLine($"\nEnter details for Consumer #{i + 1}:");
+                Console.Write("Consumer ID: ");
+                string cid = Console.ReadLine();
+                Console.Write("Units Consumed: ");
+                int units = int.Parse(Console.ReadLine());
+                Console.Write("Connection Type (1=Domestic, 2=Commercial): ");
+                int type = int.Parse(Console.ReadLine());
+                if (type == 1) domesticCount++;
+                else commercialCount++;
+                decimal baseCharge = CalculateBaseCharge(units, type);
+                decimal surcharge = baseCharge * 0.03m;
+                decimal penalty = (units > 500) ? 200 : 0;
+                decimal total = baseCharge + surcharge + penalty;
+                decimal discount = (total > 2000) ? total * 0.05m : 0;
+                decimal finalBill = total - discount;
+                totalRevenue += finalBill;
+                if (finalBill > highestBill)
+                {
+                    highestBill = finalBill;
+                    highestBillConsumer = cid;
+                }
+                Console.WriteLine("---------------------------------------");
+                Console.WriteLine($"ConsumerID: {cid}");
+                Console.WriteLine($"Type: {(type == 1 ? "Domestic" : "Commercial")}");
+                Console.WriteLine($"Units: {units}");
+                Console.WriteLine($"Base Charge: ₹{baseCharge:F2}");
+                Console.WriteLine($"Surcharge (3%): ₹{surcharge:F2}");
+                Console.WriteLine($"Penalty: ₹{penalty:F2}");
+                Console.WriteLine($"Discount: ₹{discount:F2}");
+                Console.WriteLine($"Final Bill: ₹{finalBill:F2}");
+                Console.WriteLine("---------------------------------------\n");
+            }
+            Console.WriteLine("\n---------- MONTH-END SUMMARY ----------");
+            Console.WriteLine($"Total Consumers: {N}");
+            Console.WriteLine($"Total Revenue: ₹{totalRevenue:F2}");
+            Console.WriteLine($"Highest Bill: {highestBillConsumer} → ₹{highestBill:F2}");
+            Console.WriteLine($"Domestic: {domesticCount}  Commercial: {commercialCount}");
+            Console.WriteLine("---------------------------------------");
+        }
+        static decimal CalculateBaseCharge(int units, int type)
+        {
+            decimal rate = 0;
+            if (type == 1) 
+            {
+                if (units <= 100) rate = 1.50m;
+                else if (units <= 300) rate = 2.50m;
+                else rate = 4.00m;
+            }
+            else 
+            {
+                if (units <= 200) rate = 5.00m;
+                else if (units <= 500) rate = 6.50m;
+                else rate = 8.00m;
+            }
+            return units * rate;
+        }
+    }
+}
