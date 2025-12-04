@@ -1,0 +1,50 @@
+using System;
+using System.Linq;
+
+class StudentMarksReport
+{
+    static void Main()
+    {
+        Console.Write("Enter number of students: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] marks = new int[n];
+        Console.WriteLine("Enter marks of each student:");
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Student {i + 1} mark: ");
+            marks[i] = Convert.ToInt32(Console.ReadLine());
+        }     
+        Console.WriteLine("\nMarks (original order):");
+        PrintArray(marks);     
+        int[] backup = (int[])marks.Clone();
+        int[] sorted = (int[])marks.Clone();
+        Array.Sort(sorted);
+        Console.WriteLine("\nMarks (sorted order):");
+        PrintArray(sorted);
+        int total = marks.Sum();
+        int highest = marks.Max();
+        int lowest = marks.Min();
+        Console.WriteLine($"\nTotal marks: {total}");
+        Console.WriteLine($"Highest mark: {highest}");
+        Console.WriteLine($"Lowest mark: {lowest}");       
+        Console.Write("\nEnter a mark to search: ");
+        int key = Convert.ToInt32(Console.ReadLine());
+        bool found = marks.Contains(key);
+        Console.WriteLine(found ? $"Mark {key} is present." : $"Mark {key} not found.");        
+        Console.WriteLine("\nEnter another set of marks for comparison:");
+        int[] other = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Student {i + 1} mark: ");
+            other[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        bool equal = marks.SequenceEqual(other);
+        Console.WriteLine(equal ? "The two sets of marks are identical." : "The two sets of marks are different."); 
+        Console.WriteLine("\nBackup copy of original marks:");
+        PrintArray(backup);
+    }
+    static void PrintArray(int[] arr)
+    {
+        Console.WriteLine(string.Join(", ", arr));
+    }
+}
