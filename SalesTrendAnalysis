@@ -1,0 +1,99 @@
+using System;
+
+class SalesTrendAnalysis
+{
+    static void Main()
+    {
+        Console.Write("Enter number of days in the month: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] sales = new int[n];
+
+        Console.WriteLine("Enter sales for each day:");
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Day {i + 1}: ");
+            sales[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        // Display original order
+        Console.WriteLine("\nSales data (original):");
+        PrintArray(sales);
+
+        // Create backup copy
+        int[] backup = new int[n];
+        Array.Copy(sales, backup, n);
+
+        // Sort and display sorted data
+        int[] sorted = new int[n];
+        Array.Copy(sales, sorted, n);
+        Array.Sort(sorted);
+        Console.WriteLine("\nSales data (sorted):");
+        PrintArray(sorted);
+
+        // Compute total, max, min
+        int total = 0;
+        int max = sales[0];
+        int min = sales[0];
+        foreach (int s in sales)
+        {
+            total += s;
+            if (s > max) max = s;
+            if (s < min) min = s;
+        }
+        Console.WriteLine($"\nTotal sales for the month: {total}");
+        Console.WriteLine($"Highest single-day sales: {max}");
+        Console.WriteLine($"Lowest single-day sales: {min}");
+
+        // Search for a sales value
+        Console.Write("\nEnter a sales value to search: ");
+        int key = Convert.ToInt32(Console.ReadLine());
+        bool found = false;
+        foreach (int s in sales)
+        {
+            if (s == key) { found = true; break; }
+        }
+        Console.WriteLine(found
+            ? $"Sales value {key} exists in data."
+            : $"Sales value {key} NOT found.");
+
+        // Compare with another user-entered dataset
+        Console.WriteLine("\nEnter another set of sales data for comparison:");
+        if (GetAndCompareAnotherDataset(n, sales))
+        {
+            Console.WriteLine("The new data matches the original sales data.");
+        }
+        else
+        {
+            Console.WriteLine("The new data does NOT match the original sales data.");
+        }
+
+        Console.WriteLine("\nBackup copy of original data:");
+        PrintArray(backup);
+    }
+
+    static void PrintArray(int[] arr)
+    {
+        for (int i = 0; i < arr.Length; i++)
+        {
+            Console.Write(arr[i] + (i < arr.Length - 1 ? ", " : "\n"));
+        }
+    }
+
+    static bool GetAndCompareAnotherDataset(int n, int[] original)
+    {
+        int[] other = new int[n];
+        Console.WriteLine("Enter the other month’s sales:");
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Day {i + 1}: ");
+            other[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        if (other.Length != original.Length) return false;
+        for (int i = 0; i < n; i++)
+        {
+            if (other[i] != original[i]) return false;
+        }
+        return true;
+    }
+}
