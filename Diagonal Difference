@@ -1,0 +1,33 @@
+using System;
+
+class Program
+{
+    static int DiagonalDifference(int[,] mat, int n)
+    {
+        int primarySum = 0;
+        int secondarySum = 0;
+        for (int i = 0; i < n; i++)
+        {
+            primarySum += mat[i, i];           
+            secondarySum += mat[i, n - 1 - i]; 
+        }
+        return Math.Abs(primarySum - secondarySum);
+    }
+    static void Main()
+    {
+        Console.Write("Enter size of matrix (n): ");
+        int n = int.Parse(Console.ReadLine());
+        int[,] matrix = new int[n, n];
+        Console.WriteLine("Enter matrix rows (space separated):");
+        for (int i = 0; i < n; i++)
+        {
+            string[] row = Console.ReadLine().Split();
+            for (int j = 0; j < n; j++)
+            {
+                matrix[i, j] = int.Parse(row[j]);
+            }
+        }
+        int result = DiagonalDifference(matrix, n);
+        Console.WriteLine("Absolute Diagonal Difference = " + result);
+    }
+}
