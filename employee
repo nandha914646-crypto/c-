@@ -1,0 +1,89 @@
+using System;
+
+class Employee
+{
+    public string EmployeeName { get; set; }
+    public decimal BasicSalary { get; set; }
+    public decimal HRA { get; set; }
+    public decimal DA { get; set; }
+    public decimal Tax { get; set; }
+    public decimal GrossPay { get; set; }
+    public decimal NetSalary { get; set; }
+
+    public Employee(string name, decimal basicSalary)
+    {
+        EmployeeName = name;
+        BasicSalary = basicSalary;
+    }
+    public void CalculateNetPay()
+    {
+        HRA = BasicSalary * 0.15m;       // 15% of Basic
+        DA = BasicSalary * 0.10m;        // 10% of Basic
+        GrossPay = BasicSalary + HRA + DA;
+        Tax = GrossPay * 0.08m;          // 8% of Gross
+        NetSalary = GrossPay - Tax;
+    }
+
+    public void Display()
+    {
+        Console.WriteLine("Employee Name : " + EmployeeName);
+        Console.WriteLine("Basic Salary  : " + BasicSalary);
+        Console.WriteLine("HRA           : " + HRA);
+        Console.WriteLine("DA            : " + DA);
+        Console.WriteLine("Gross Pay     : " + GrossPay);
+        Console.WriteLine("Tax           : " + Tax);
+        Console.WriteLine("Net Salary    : " + NetSalary);
+    }
+}
+class Stock
+{
+    public string StockName { get; set; }
+    public string StockSymbol { get; set; }
+    public double PreviousClosingPrice { get; set; }
+    public double CurrentClosingPrice { get; set; }
+
+    public Stock(string name, string symbol, double previousPrice, double currentPrice)
+    {
+        StockName = name;
+        StockSymbol = symbol;
+        PreviousClosingPrice = previousPrice;
+        CurrentClosingPrice = currentPrice;
+    }
+
+    public double GetChangePercentage()
+    {
+        return ((CurrentClosingPrice - PreviousClosingPrice) / PreviousClosingPrice) * 100;
+    }
+}
+class RandomHelper
+{
+    private static Random rand = new Random();
+
+    
+    public static int randint(int min, int max)
+    {
+        return rand.Next(min, max + 1);
+    }
+
+  
+    public static double randdouble(int min, int max)
+    {
+        return rand.NextDouble() * (max - min) + min;
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        Employee emp = new Employee("Nandha Kumar", 50000);
+        emp.CalculateNetPay();
+        emp.Display();
+
+        Console.WriteLine();
+        Stock stock = new Stock("Infosys", "INFY", 1500, 1560);
+        Console.WriteLine("Stock Change Percentage: " + stock.GetChangePercentage() + "%");
+        Console.WriteLine();
+        Console.WriteLine("Random Integer (1-10): " + RandomHelper.randint(1, 10));
+        Console.WriteLine("Random Double (1-10): " + RandomHelper.randdouble(1, 10));
+    }
+}
