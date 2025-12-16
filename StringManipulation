@@ -1,0 +1,30 @@
+using System;
+
+class StringManipulation
+{
+    static void Main()
+    {
+        Console.Write("Enter a string: ");
+        string str = Console.ReadLine();
+        // 1. Reverse the string
+        char[] arr = str.ToCharArray();
+        Array.Reverse(arr);
+        Console.WriteLine("Reversed string: " + new string(arr));
+        // 2. Extract from 2nd position till end
+        if (str.Length > 1)
+            Console.WriteLine("Substring from 2nd position: " + str.Substring(1));
+        else
+            Console.WriteLine("String too short for substring.");
+        // 3. Replace given character by '$'
+        Console.Write("Enter a character to replace: ");
+        char ch = Console.ReadKey().KeyChar;
+        Console.WriteLine();
+        string replacedString = str.Replace(ch, '$');
+        Console.WriteLine("After replacement: " + replacedString);
+        // 4. Copy string to another variable and modify
+        string strCopy = str;
+        strCopy = strCopy.ToUpper();
+        Console.WriteLine("Original string: " + str);
+        Console.WriteLine("Modified copied string: " + strCopy);
+    }
+}
