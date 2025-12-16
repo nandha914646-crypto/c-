@@ -1,0 +1,29 @@
+using System;
+
+class LoginSystem
+{
+    static void Main()
+    {
+        string correctLogin = "admin";
+        string correctPassword = "1234";
+        int attempts = 0;
+        while (attempts < 3)
+        {
+            Console.Write("Enter login: ");
+            string login = Console.ReadLine();
+            Console.Write("Enter password: ");
+            string password = Console.ReadLine();
+            if (login == correctLogin && password == correctPassword)
+            {
+                Console.WriteLine("Login successful!");
+                return;
+            }
+            else
+            {
+                attempts++;
+                Console.WriteLine("Invalid login or password.");
+            }
+        }
+        Console.WriteLine("You are rejected after 3 wrong attempts.");
+    }
+}
