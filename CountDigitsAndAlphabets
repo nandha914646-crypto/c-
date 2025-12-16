@@ -1,0 +1,21 @@
+using System;
+
+class CountDigitsAndAlphabets
+{
+    static void Main()
+    {
+        Console.Write("Enter a string: ");
+        string input = Console.ReadLine();
+        int digitCount = 0;
+        int alphabetCount = 0;
+        foreach (char ch in input)
+        {
+            if (char.IsDigit(ch))
+                digitCount++;
+            else if (char.IsLetter(ch))
+                alphabetCount++;
+        }
+        Console.WriteLine("Number of digits: " + digitCount);
+        Console.WriteLine("Number of alphabets: " + alphabetCount);
+    }
+}
