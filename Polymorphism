@@ -1,0 +1,46 @@
+using System;
+namespace Polymorphism
+{
+    class Shape
+    {
+        public virtual void Draw()
+        {
+            Console.WriteLine("Drawing a shape");
+        }
+    }
+    class Circle : Shape
+    {
+        public override void Draw()
+        {
+            Console.WriteLine("Drawing a circle");
+        }
+    }
+    class Rectangle : Shape
+    {
+        public override void Draw()
+        {
+            Console.WriteLine("Drawing a rectangle");
+        }
+    }
+    class Triangle : Shape
+    {
+        public override void Draw()
+        {
+            Console.WriteLine("Drawing a triangle");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Shape shape;
+            shape = new Circle();
+            shape.Draw();
+            shape = new Rectangle();
+            shape.Draw();
+            shape = new Triangle();
+            shape.Draw();
+            Console.ReadLine();
+        }
+    }
+}
