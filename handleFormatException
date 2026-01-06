@@ -1,0 +1,76 @@
+using System;
+using System.Text.RegularExpressions;
+
+class NegativeNumberException : Exception
+{
+    public NegativeNumberException(string message) : base(message)
+    {
+    }
+}
+
+// Person Class
+class Person
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public Person(string firstName, string lastName)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new ArgumentException("First Name cannot be empty.");
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new ArgumentException("Last Name cannot be empty.");
+        if (!Regex.IsMatch(firstName, "^[a-zA-Z]+$"))
+            throw new ArgumentException("First Name should contain only alphabets.");
+        if (!Regex.IsMatch(lastName, "^[a-zA-Z]+$"))
+            throw new ArgumentException("Last Name should contain only alphabets.");
+        FirstName = firstName;
+        LastName = lastName;
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            // Input Person Details
+            Console.Write("Enter First Name: ");
+            string firstName = Console.ReadLine();
+            Console.Write("Enter Last Name: ");
+            string lastName = Console.ReadLine();
+            Person person = new Person(firstName, lastName);
+            int[] marks = new int[3];
+            // Input Marks
+            for (int i = 0; i < 3; i++)
+            {
+                Console.Write($"Enter marks for subject {i + 1}: ");
+                marks[i] = int.Parse(Console.ReadLine());
+                if (marks[i] < 0)
+                    throw new NegativeNumberException("Marks cannot be negative.");
+            }
+            Console.WriteLine("\n--- Student Details ---");
+            Console.WriteLine($"Name: {person.FirstName} {person.LastName}");
+            Console.WriteLine("Marks:");
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"Subject {i + 1}: {marks[i]}");
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Error: Please enter only integer values for marks.");
+        }
+        catch (NegativeNumberException ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Unexpected Error: " + ex.Message);
+        }
+    }
+}
